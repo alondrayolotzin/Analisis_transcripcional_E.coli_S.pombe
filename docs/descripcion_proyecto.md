@@ -9,6 +9,7 @@ Fecha: dd/mm/aaaa
 ## Planteamiento del problema
 
 [Describir la problemática que se presenta, la situación que motiva la realización del proyecto y que está causando posibles inconvenientes]
+Se busca analizar los genes diferencialmente expresados en Escherichia Coli y de Schizosaccharomyces pombe mediante secuenciación transcriptómica
 
 ## Calendario de trabajo
 
