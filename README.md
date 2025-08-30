@@ -6,7 +6,7 @@ Fecha: 29/09/2025
 
 **Participantes**:
 
-- Alondra Yolotzin Márquez Mendoza <email:alondram@lcg.unam.mx> Miryam Zamora Jiménez <miryamzj@lcg.unam.mx>
+- Alondra Yolotzin Márquez Mendoza <alondram@lcg.unam.mx> Miryam Zamora Jiménez <miryamzj@lcg.unam.mx>
 
 ## Planteamiento del problema
 
