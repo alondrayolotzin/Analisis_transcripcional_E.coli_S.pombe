@@ -19,12 +19,12 @@ Se busca analizar los genes diferencialmente expresados en Escherichia Coli y de
 | Actividad | Fecha   | Responsable  | Entregable |
 |----------|----------|----------|----------|
 | Descripción de proyecto    | Reunirnos Martes y viernes de 10 a 12  | Miryam Zamora, Alondra Márquez  | Documento markdown-README.md |
-| Especificación de requisitos    | septiembre   | Alo y Miryam   | Documento markdown   |
-| Análisis y diseño   | septiembre  |  Daniela Estrada   | Documento markdown |
-| Construcción   | octubre, noviembre  |  Daniela Estrada, Juan López   | Scripts |
-| Pruebas   | noviembre  |  Daniela Estrada, Juan López   | Documento markdown |
-| Reporte de resultados  | noviembre  |  Daniela Estrada, Juan López   | Documentos markdown |
-| Presentación del proyecto   | diciembre  |  Daniela Estrada, Juan López   | repositorio GitHub (release)|
+| Especificación de requisitos    | septiembre   | Alo y Miryam   | Documento markdown-README.md   |
+| Análisis y diseño   | 20 septiembre  |
+| Construcción   | octubre, noviembre  |  Miryam y Alo    | Scripts |
+| Pruebas   | noviembre  |  Miryam y Alo   | Documento markdown |
+| Reporte de resultados  | noviembre  |  Alo y Miryam   | Documentos markdown |
+| Presentación del proyecto   | diciembre  |  Alo y Miryam   | repositorio GitHub (release)|
 
 
 
