@@ -18,8 +18,8 @@ Se busca analizar los genes diferencialmente expresados en Escherichia Coli y de
 
 | Actividad | Fecha   | Responsable  | Entregable |
 |----------|----------|----------|----------|
-| Descripción de proyecto    | 3-10 marzo  | Juan López, Daniela Estrada   | Documento markdown |
-| Especificación de requisitos    | septiembre   | Juan López   | Documento markdown   |
+| Descripción de proyecto    | Reunirnos Martes y viernes de 10 a 12  | Miryam Zamora, Alondra Márquez  | Documento markdown-README.md |
+| Especificación de requisitos    | septiembre   | Alo y Miryam   | Documento markdown   |
 | Análisis y diseño   | septiembre  |  Daniela Estrada   | Documento markdown |
 | Construcción   | octubre, noviembre  |  Daniela Estrada, Juan López   | Scripts |
 | Pruebas   | noviembre  |  Daniela Estrada, Juan López   | Documento markdown |
