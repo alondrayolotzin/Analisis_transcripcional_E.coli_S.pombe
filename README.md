@@ -8,7 +8,7 @@ Fecha: 29/09/2025
 
 El presente proyecto tiene como propósito reproducir y analizar, mediante herramientas bioinformáticas, los resultados reportados en el estudio:
 
->Vichi J., Salazar E., Jiménez Jacinto V., Olvera Rodríguez L., Grande R., Dantán-González E., Morett E., Hernández-Mendoza A. (2021). High-throughput transcriptome >sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth. PLOS ONE. >https://doi.org/10.1371/journal.pone.0248513
+>Vichi J., Salazar E., Jiménez Jacinto V., Olvera Rodríguez L., Grande R., Dantán-González E., Morett E., Hernández-Mendoza A. (2021). High-throughput transcriptome >sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth. PLOS ONE. https://doi.org/10.1371/journal.pone.0248513
 
 En dicho trabajo, se llevó a cabo la secuenciación y análisis comparativo del transcriptoma de Escherichia coli (procariota) y Schizosaccharomyces pombe (eucariota unicelular) bajo condiciones de crecimiento respiratorias y fermentativas. A partir de estos datos, se identificaron genes diferencialmente expresados y se exploraron las similitudes y diferencias en los procesos metabólicos y regulatorios entre ambos organismos.
 
