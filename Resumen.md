@@ -1,6 +1,6 @@
-# Resumen artículo  
+#### Resumen artículo  
 
-**High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth**  
+# High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth  
 
 El presente artículo de investigación se centra en el análisis transcripcional comparativo de dos organismos modelo pertenecientes a dominios distintos de la vida, *Escherichia coli*, una bacteria Gram negativa, y *Schizosaccharomyces pombe*, una levadura de fisión; ambos organismos, a pesar de su lejanía evolutiva, comparten procesos metabólicos básicos, lo que los convierte en sistemas de referencia útiles para la exploración de similitudes y diferencias en la respuesta a distintas condiciones de crecimiento.  
 
