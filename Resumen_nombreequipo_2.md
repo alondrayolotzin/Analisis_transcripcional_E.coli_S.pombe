@@ -1,6 +1,6 @@
 #### Resumen artículo  
 
-# High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth  
+## High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth  
 
 El presente artículo de investigación se centra en el análisis transcripcional comparativo de dos organismos modelo pertenecientes a dominios distintos de la vida, *Escherichia coli*, una bacteria Gram negativa, y *Schizosaccharomyces pombe*, una levadura de fisión; ambos organismos, a pesar de su lejanía evolutiva, comparten procesos metabólicos básicos, lo que los convierte en sistemas de referencia útiles para la exploración de similitudes y diferencias en la respuesta a distintas condiciones de crecimiento.  
 
@@ -19,3 +19,6 @@ El análisis de enriquecimiento funcional confirmó que la glucosa favorece ruta
 Los análisis fenotípicos realizados respaldaron estos cambios; en la condición de glicerol/acetato, *E. coli* desarrolló flagelos visibles, mientras que las células de *S. pombe* se volvieron más pequeñas y redondeadas, contrastando con la morfología alargada que se observa en glucosa. Ambos organismos también activaron genes del metabolismo de galactosa y transportadores de hexosas de alta afinidad, reflejando un ajuste metabólico conservado. En conjunto, estos hallazgos sugieren que el crecimiento respiratorio induce un estado similar a un **“foraging behavior”**, donde las células invierten en la captura de nutrientes, la tolerancia al estrés y el uso de rutas metabólicas alternativas, con los ncRNAs desempeñando un papel especialmente central en *S. pombe*.  
 
 En conclusión, el estudio determina que la glucosa apoya de manera consistente el crecimiento y la proliferación celular tanto en procariotas como en eucariotas, mientras que el glicerol/acetato activa programas adaptativos semejantes al **“foraging behavior”**, que incluyen motilidad, adaptación al estrés y flexibilidad metabólica. A pesar de sus diferencias, tanto *E. coli* como *S. pombe* dependen de estrategias transcripcionales conservadas, lo que enfatiza la importancia evolutiva de los ncRNAs y de las vías de señalización en la configuración de las estrategias de supervivencia.  
+
+#### REFERENCIAS 
+>Vichi J., Salazar E., Jiménez Jacinto V., Olvera Rodríguez L., Grande R., Dantán-González E., Morett E., Hernández-Mendoza A. (2021). High-throughput transcriptome >sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth. PLOS ONE. https://doi.org/10.1371/journal.pone.0248513
