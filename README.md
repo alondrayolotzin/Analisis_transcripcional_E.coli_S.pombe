@@ -82,14 +82,23 @@ Paso 6: Obtención de resultados
 ## Resultados esperados
 
 data/metadata/samples.tsv
+
 data/reference/*/{genome.fa, genes.gtf, index/}
+
 results/align/*/*.sorted.{bam,bai}
+
 results/counts/{Ecoli_counts.tsv, Spombe_counts.tsv}
+
 results/DE/*/{DEGs.tsv, normalized_counts.tsv}
+
 results/plots/*/{MA.png, volcano.png, PCA.png}
+
 results/annotation/*.tsv
+
 results/comparative/summary.tsv
+
 logs/{download,validate,align,count,de}/*.log
+
 docs/{presentacion_final.pdf, pipeline.svg}
 
 
