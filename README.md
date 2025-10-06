@@ -161,37 +161,5 @@ Funciones (pseudocódigo)
 8. Anotar y comparar resultados -> informes y visualizaciones en BASE_DATA_DIR/analysis/
 9. Guardar metadata, versiones (AssemblyAccession, Fecha, Hash archivos) en BASE_DATA_DIR/metadata/
 
-## DIAGRAMA - DESCRIPCIÓN DEL PIPELINE
 
-[## Flujo general del pipeline
 
-**Entrada:** Datos públicos RNA-seq (SRA/ENA)  
-
-[ Datos públicos RNA-seq (SRA/ENA) ]
-↓
-[ Diseño de búsqueda ]
-(egquery / espell / einfo)
-↓
-[ IDs SRA ] ← esearch (bioproject / sra)
-↓
-[ RunInfo.csv + samples.tsv ] ← efetch (runinfo)
-↓
-[ Descarga FASTQ ]
-
-+----------------- Referencias -----------------+
-| esearch / esummary (assembly) |
-| elink (assembly → nuccore) |
-| efetch (fasta / gff) |
-+-----------------------------------------------+
-↓
-[ genome.fa + genes.gtf ]
-        ↓
-[ Alineamiento (HISAT2 / STAR) ]
-↓
-[ Conteos (featureCounts / HTSeq) ]
-↓
-[ DESeq2 por organismo ]
-↓
-[ Anotación de DEGs ]
-↓
-[ Comparación: E. coli vs S. pombe ]
