@@ -164,17 +164,17 @@ Funciones (pseudocódigo)
 ## PRUEBA DESCRIPCIÓN DEL PIPELINE
 
 flowchart LR
-  A[Datos públicos RNA-seq<br/>SRA / ENA] -->|egquery/espell/einfo| B[Diseño de búsqueda]
-  B -->|esearch bioproject/sra| C[IDs SRA]
-  C -->|efetch runinfo| D[RunInfo.csv<br/>samples.tsv]
-  D --> E[Descarga FASTQ]
-  subgraph Referencias
-    F1[esearch/esummary assembly] --> F2[elink assembly→nuccore]
-    F2 -->|efetch fasta/gff| F3[genome.fa / genes.gtf]
-  end
-  E --> G[Alineamiento (HISAT2/STAR)]
-  F3 --> G
-  G --> H[Conteos (featureCounts/HTSeq)]
-  H --> I[DESeq2 por organismo]
-  I --> J[Anotación de DEGs]
-  J --> K[Comparación E. coli vs S. pombe]
+A[Datos públicos RNA-seq<br/>SRA / ENA] -->|egquery/espell/einfo| B[Diseño de búsqueda]
+B -->|esearch bioproject/sra| C[IDs SRA]
+C -->|efetch runinfo| D[RunInfo.csv<br/>samples.tsv]
+D --> E[Descarga FASTQ]
+subgraph Referencias
+F1[esearch/esummary assembly] --> F2[elink assembly→nuccore]
+F2 -->|efetch fasta/gff| F3[genome.fa / genes.gtf]
+end
+E --> G[Alineamiento (HISAT2/STAR)]
+F3 --> G
+G --> H[Conteos (featureCounts/HTSeq)]
+H --> I[DESeq2 por organismo]
+I --> J[Anotación de DEGs]
+J --> K[Comparación E. coli vs S. pombe]
