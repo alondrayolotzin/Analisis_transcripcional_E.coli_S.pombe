@@ -163,43 +163,35 @@ Funciones (pseudocódigo)
 
 ## DIAGRAMA - DESCRIPCIÓN DEL PIPELINE
 
+[## Flujo general del pipeline
+
+**Entrada:** Datos públicos RNA-seq (SRA/ENA)  
+
 [ Datos públicos RNA-seq (SRA/ENA) ]
-            |
-            v
+↓
 [ Diseño de búsqueda ]
-  (egquery / espell / einfo)
-            |
-            v
-[ IDs SRA ]  <-- esearch (bioproject/sra)
-            |
-            v
-[ RunInfo.csv + samples.tsv ]  <-- efetch (runinfo)
-            |
-            v
+(egquery / espell / einfo)
+↓
+[ IDs SRA ] ← esearch (bioproject / sra)
+↓
+[ RunInfo.csv + samples.tsv ] ← efetch (runinfo)
+↓
 [ Descarga FASTQ ]
 
-+---------------- Referencias ----------------+
-| esearch/esummary (assembly)                 |
-| elink (assembly -> nuccore)                 |
-| efetch (fasta/gff)                          |
-+---------------------------------------------+
-            |
-            v
++----------------- Referencias -----------------+
+| esearch / esummary (assembly) |
+| elink (assembly → nuccore) |
+| efetch (fasta / gff) |
++-----------------------------------------------+
+↓
 [ genome.fa + genes.gtf ]
-
-            |
-            v
-[ Alineamiento (HISAT2/STAR) ]
-            |
-            v
+        ↓
+[ Alineamiento (HISAT2 / STAR) ]
+↓
 [ Conteos (featureCounts / HTSeq) ]
-            |
-            v
+↓
 [ DESeq2 por organismo ]
-            |
-            v
+↓
 [ Anotación de DEGs ]
-            |
-            v
+↓
 [ Comparación: E. coli vs S. pombe ]
-
