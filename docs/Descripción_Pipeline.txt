@@ -1,0 +1,35 @@
+## Descripción del pipeline
+
+Referencias (genoma + anotación)
+Herramientas: NCBI Entrez (esearch, efetch, esummary, elink)
+Entrada: nombres de organismo (E. coli MG1655 GCF_000005845.2; S. pombe ASM294v3 GCF_000002945.2)
+Salida: data/reference/{Ecoli,Spombe}/{genome.fa, genes.gtf} (+ VERSIONS.txt con versión/checksum)
+
+Lecturas (12 FASTQ)
+Herramientas: Entrez (esearch/efetch runinfo) + SRA Toolkit (prefetch, fasterq-dump)
+Entrada: data/metadata/samples.tsv (organism, condition, replicate, accession, read_type)
+Salida: data/fastq/raw/<sample>_R{1,2}.fastq.gz (+ logs en logs/download/)
+
+FAST-QC
+Herramientas: FastQC + MultiQC
+Salida: results/qc/* (HTML/ZIP, reporte multiqc)
+
+Alineamiento
+Herramientas: HISAT2 (o STAR)
+Entrada: FASTQ + referencias
+Salida: results/align/{Ecoli,Spombe}/<sample>.sorted.bam y <sample>.sorted.bam.bai (+ logs/align/)
+
+Conteo por gen
+Herramientas: featureCounts (Subread) o HTSeq
+Entrada: BAM + GTF/GFF
+Salida: results/counts/Ecoli_counts.tsv, results/counts/Spombe_counts.tsv (+ featureCounts.summary)
+
+Expresión diferencial
+Herramientas: DESeq2 (R)
+Entrada: matrices de conteo + diseño experimental (condition)
+Salida: results/DE/<Org>/{DEGs.tsv, normalized_counts.tsv}, gráficos en results/plots/<Org>/{MA,volcano,PCA}.png
+
+Anotación y comparación
+Herramientas: Entrez/biomart/archivos de referencia
+Entrada: listas de DEGs por organismo
+Salida: results/annotation/{Ecoli,Spombe}_annotation.tsv, results/comparative/summary.tsv
