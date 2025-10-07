@@ -121,9 +121,10 @@ R 4.2+: DESeq2, ggplot2
 
 Estructura de carpetas
 .
-├── modules/                       # funciones del pipeline (Python)
-├── scripts/                       # R/DESeq2 y utilidades
-├── data/
+├                    
+├── src/                           # Donde ejecutaremos los main
+│   ├──modules                     # scripts con funciones
+├── data/                           
 │   ├── fastq/
 │   │   └── raw/                   # *.fastq.gz
 │   ├── E_coli_MG1655/             # genome.fa, genes.gff
@@ -131,13 +132,13 @@ Estructura de carpetas
 ├── results/
 │   ├── align/
 │   ├── counts/
-│   ├── DE/
+│   ├── DE/                         #Salidas de DESeq2
 │   ├── annotation/
 │   └── comparative/
 ├── docs/
 │   ├── pipeline_ascii.md
 │   └── presentacion_final.pdf
-├── logs/
+├── test/                          #códigos de prueba
 └── README.md
 
 Metadatos de muestras
