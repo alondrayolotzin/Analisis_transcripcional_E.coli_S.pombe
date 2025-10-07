@@ -1,9 +1,9 @@
-#High-throughput transcriptome sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth
+High-throughput transcriptome sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth
 
 Fecha: 06/10/2025
 Autores: Miryam Zamora, Alondra Márquez
 
-##Descripción
+Descripción
 
 Reproducimos y extendemos el análisis de Vichi et al. (2021) para comparar las respuestas transcriptómicas de E. coli (procariota) y S. pombe (eucariota) en respiración vs fermentación. Construimos un pipeline reproducible que descarga datos públicos, alinea, cuantifica, realiza DESeq2 y compara DEGs entre organismos.
 
@@ -11,7 +11,7 @@ Reproducimos y extendemos el análisis de Vichi et al. (2021) para comparar las 
 
 Identificar genes diferencialmente expresados y patrones conservados/divergentes entre E. coli y S. pombe bajo respiración y fermentación, usando un flujo reproducible de RNA-seq.
 
-##Objetivos específicos
+Objetivos específicos
 
 - Descargar las 12 bibliotecas FASTQ (2 org × 2 condiciones × 3 réplicas).
 
@@ -27,7 +27,7 @@ Identificar genes diferencialmente expresados y patrones conservados/divergentes
 
 - Comparar resultados: similitudes/diferencias entre organismos.
 
-##Descripción del pipeline
+Descripción del pipeline
 
 Diagrama (ASCII)
 
