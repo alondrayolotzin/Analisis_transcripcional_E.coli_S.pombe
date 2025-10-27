@@ -1,32 +1,36 @@
-from pathlib import Path
-from Bio import Entrez
-from modules.descarga import assemblies_por_organismo, descargar_ecoli_ref, descargar_spombe_ref
 import argparse
+from Bio import Entrez
+import pandas as pd
+from ftplib import FTP
+from urllib.parse import urlparse
+from pathlib import Path
+from modules.descarga import assemblies_por_organismo, descargar_ensamblado
 
-def main(step: str):
-    Entrez.email = "miryamzj@lcg.unam.mx"
-    ROOT = Path(__file__).resolve().parent
-    DATA = ROOT / "data"; DATA.mkdir(exist_ok=True)
+Entrez.email = "miryamzj@lcg.unam.mx"
 
-    S_POMBE = "Schizosaccharomyces pombe"
-    E_COLI  = "Escherichia coli"
+def main():
+    parser = argparse.ArgumentParser(
+        description="Descarga archivos genómicos (fna, gff, faa) desde NCBI por organismo y accession ID."
+    )
+    parser.add_argument("--organismo", required=True, help="Nombre científico del organismo (entre comillas si tiene espacios).")
+    parser.add_argument("--accession", required=True, help="ID de ensamblado (por ejemplo, GCF_000002945.2).")
+    parser.add_argument("--outdir", default="descargas", help="Carpeta de salida donde guardar los archivos.")
+    parser.add_argument("--incluir", nargs="+", default=["fna", "gff"], choices=["fna", "gff", "faa"],
+                        help="Tipos de archivos a descargar (por defecto: fna gff).")
+    parser.add_argument("--retmax", type=int, default=50, help="Número máximo de ensamblados a buscar (por defecto: 50).")
 
-    # Siempre podemos calcular estas tablas (son rápidas)
-    df_pombe = assemblies_por_organismo(S_POMBE, 20)
-    df_coli  = assemblies_por_organismo(E_COLI, 50)
+    args = parser.parse_args()
 
-    if step in ("assemblies", "all"):
-        print("Assemblies S. pombe:", len(df_pombe))
-        print("Assemblies E. coli :", len(df_coli))
+    print(f"\n Buscando ensamblados de {args.organismo}...")
+    df = assemblies_por_organismo(args.organismo, retmax=args.retmax)
 
-    if step in ("download", "all"):
-        out_p = DATA / "S_pombe_ASM294v3"
-        out_c = DATA / "E_coli_MG1655"
-        descargar_spombe_ref(df_pombe, outdir=out_p)   # cada función debería saltar si ya existe genome.fa
-        descargar_ecoli_ref(df_coli,  outdir=out_c)
+    print("\nColumnas disponibles:", df.columns.tolist())
+    print(df.head(3).to_string())
+    
+
+    print(f"Descargando ensamblado {args.accession}...")
+    descargar_ensamblado(df, args.accession, args.outdir, incluir=args.incluir)
+
 
 if __name__ == "__main__":
-    p = argparse.ArgumentParser()
-    p.add_argument("--step", choices=["assemblies","download","all"], default="all")
-    args = p.parse_args()
-    main(args.step)
+    main()
