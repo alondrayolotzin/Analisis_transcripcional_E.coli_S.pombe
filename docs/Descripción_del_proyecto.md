@@ -1,97 +1,139 @@
-# Nombre del proyecto 
-## High-throughput transcriptome sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth
 
+High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth
 
-**Fecha: 29/09/2025**
-**Autores:** Miryam Zamora, Alondra Márquez
+**Fecha:** 29/09/2025  
+**Autores:** Miryam Zamora, Alondra Márquez  
 
-## Descripción del proyecto 
+---
 
-El presente proyecto tiene como propósito construir un pipeline reproducible de RNA-seq para ambos organismos y comparar firmas de expresión, así como y analizar, mediante herramientas bioinformáticas, los resultados reportados en el estudio:
+## Descripción del proyecto
 
->Vichi J., Salazar E., Jiménez Jacinto V., Olvera Rodríguez L., Grande R., Dantán-González E., Morett E., Hernández-Mendoza A. (2021). High-throughput transcriptome >sequencing and comparative analysis of Escherichia coli and Schizosaccharomyces pombe in respiratory and fermentative growth. PLOS ONE. https://doi.org/10.1371/journal.pone.0248513
+El presente proyecto tiene como propósito construir un **pipeline reproducible de RNA-seq** para ambos organismos y comparar firmas de expresión, así como analizar, mediante herramientas bioinformáticas, los resultados reportados en el estudio:
 
-En dicho trabajo, se llevó a cabo la secuenciación y análisis comparativo del transcriptoma de Escherichia coli (procariota) y Schizosaccharomyces pombe (eucariota unicelular) bajo condiciones de crecimiento respiratorias y fermentativas. A partir de estos datos, se identificaron genes diferencialmente expresados y se exploraron las similitudes y diferencias en los procesos metabólicos y regulatorios entre ambos organismos.
+> Vichi J., Salazar E., Jiménez-Jacinto V., Olvera Rodríguez L., Grande R., Dantán-González E., Morett E., Hernández-Mendoza A. (2021).  
+> *High-throughput transcriptome sequencing and comparative analysis of* Escherichia coli *and* Schizosaccharomyces pombe *in respiratory and fermentative growth*. PLOS ONE.  
+> [https://doi.org/10.1371/journal.pone.0248513](https://doi.org/10.1371/journal.pone.0248513)
+
+En dicho trabajo, se llevó a cabo la secuenciación y análisis comparativo del transcriptoma de *Escherichia coli* (procariota) y *Schizosaccharomyces pombe* (eucariota unicelular) bajo condiciones de crecimiento respiratorias y fermentativas. A partir de estos datos, se identificaron genes diferencialmente expresados y se exploraron las similitudes y diferencias en los procesos metabólicos y regulatorios entre ambos organismos.
 
 En este proyecto se emplearán directamente los datos proporcionados por los autores para llevar a cabo el pipeline de análisis bioinformático.
 
-## Objetivo
+---
 
-Analizar los datos transcriptómicos de E. coli y S. pombe bajo condiciones de respiración y fermentación con el fin de identificar genes diferencialmente expresados, explorar su anotación funcional y realizar una comparación entre organismos que permita resaltar procesos conservados y divergentes.
+## Objetivo general
 
-    ## Objetivos específicos 
+Analizar los datos transcriptómicos de *E. coli* y *S. pombe* bajo condiciones de respiración y fermentación con el fin de:
 
-  1) Descargar los **12 FASTQ**   
-  2) Descargar y versionar **genomas de referencia: Schizosaccharomyces pombe (fission yeast)     ASM294v3   GCF_000002945.2 reference genome; Escherichia coli str. K-12 substr. MG1655 (E. coli)     ASM584v2   GCF_000005845.2 reference genome** 
-  (FASTA) y **anotaciones** (GTF/GFF).  (Que se descargan automáticamente a ../../data/)
-  3) Alinear por réplica y generar **BAM ordenados + BAI**.  
-  4) Obtener **matriz de conteos por gen**.  
-  5) Realizar **DESeq2** por organismo.  
-  6) **Anotar DEGs** y **comparar** patrones compartidos/divergentes.
+- Identificar genes diferencialmente expresados.
+- Explorar su anotación funcional.
+- Realizar una comparación entre organismos que permita resaltar procesos conservados y divergentes.
+
+---
+
+## Objetivos específicos
+
+1. Descargar las 12 bibliotecas FASTQ (2 organismos × 2 condiciones × 3 réplicas).
+2. Descargar y versionar genomas de referencia:
+   - *Schizosaccharomyces pombe* (fission yeast) ASM294v3 — `GCF_000002945.2` (reference genome).
+   - *Escherichia coli* str. K-12 substr. MG1655 — `GCF_000005845.2` (reference genome).
+   - Incluir secuencias en formato FASTA y anotaciones en GTF/GFF.  
+     > Se descargarán automáticamente a `../../data/`.
+3. Alinear por réplica y generar archivos BAM ordenados e indexados (`.bam` + `.bai`).
+4. Obtener una matriz de conteos por gen.
+5. Realizar análisis de expresión diferencial (DESeq2) por organismo.
+6. Anotar los DEGs y comparar patrones compartidos/divergentes entre *E. coli* y *S. pombe*.
+
+---
 
 ## Planteamiento del problema
 
-Contexto. La respiración y la fermentación inducen reprogramaciones transcriptómicas profundas. Comparar estas respuestas en dos organismos filogenéticamente distantes—Escherichia coli (procariota) y Schizosaccharomyces pombe (eucariota)—permite distinguir mecanismos conservados del metabolismo central frente a respuestas específicas de linaje.
+### Contexto
 
-Problema a resolver. Reproducir computacionalmente (y extender) el análisis de Vichi et al. con un pipeline modular y validado que, a partir de lecturas RNA-seq públicas, produzca matrices de conteo, resultados de expresión diferencial y una comparación funcional entre organismos.
+La respiración y la fermentación inducen reprogramaciones transcriptómicas profundas. Comparar estas respuestas en dos organismos filogenéticamente distantes —*Escherichia coli* (procariota) y *Schizosaccharomyces pombe* (eucariota)— permite distinguir mecanismos conservados del metabolismo central frente a respuestas específicas de cada linaje.
+
+### Problema a resolver
+
+Reproducir computacionalmente (y extender) el análisis de Vichi *et al.* mediante un **pipeline modular y validado** que, a partir de lecturas RNA-seq públicas, produzca:
+
+- Matrices de conteos por gen.
+- Resultados de expresión diferencial.
+- Una comparación funcional entre organismos.
+
+---
 
 ## Calendario de trabajo
 
-[Definir de manera general la actividades que se requerirán para el proyecto. Por ejemplo:]
+> Fechas y plazos tentativos; pueden ajustarse durante el desarrollo del proyecto.
 
-| Actividad | Fecha   | Responsable  | Entregable |
-|----------|----------|----------|----------|
-| Descripción de proyecto    | Reunirnos Martes y viernes de 10 a 12  | Miryam Zamora, Alondra Márquez  | Documento markdown-README.md |
-| Especificación de requisitos    | septiembre   | Alo y Miryam   | Documento markdown-README.md   |
-| Análisis y diseño   | 20 septiembre  |
-| Construcción   | octubre, noviembre  |  Miryam y Alo    | Scripts |
-| Pruebas   | noviembre  |  Miryam y Alo   | Documento markdown |
-| Reporte de resultados  | noviembre  |  Alo y Miryam   | Documentos markdown |
-| Presentación del proyecto   | diciembre  |  Alo y Miryam   | repositorio GitHub (release)|
+| Actividad                    | Fecha / periodo                       | Responsable                        | Entregable                              |
+|------------------------------|---------------------------------------|------------------------------------|-----------------------------------------|
+| Descripción de proyecto      | Septiembre (reuniones Ma y Vi 10–12) | Miryam Zamora, Alondra Márquez     | Documento `README.md`                   |
+| Especificación de requisitos | Septiembre                            | Miryam y Alo                       | `README.md` con requisitos del pipeline |
+| Análisis y diseño            | 20 de septiembre (aprox.)             | Miryam y Alo                       | Borrador de flujo / pseudocódigo       |
+| Construcción                 | Octubre–noviembre                     | Miryam y Alo                       | Scripts en `src/`                       |
+| Pruebas                      | Noviembre                             | Miryam y Alo                       | Informe breve de pruebas (markdown)     |
+| Reporte de resultados        | Noviembre                             | Alo y Miryam                       | Documentos markdown + figuras           |
+| Presentación del proyecto    | Diciembre                             | Alo y Miryam                       | Repositorio GitHub (release) + slides   |
 
+---
 
-**Preguntas de investigación**
+## Preguntas de investigación
 
-¿Qué genes cambian significativamente entre respiración y fermentación en cada organismo (FDR < 0.05, |log2FC| ≥ 1)?
+1. ¿Qué genes cambian significativamente entre respiración y fermentación en cada organismo (FDR < 0.05, \|log2FC\| ≥ 1)?
+2. ¿Qué procesos/ontologías (p. ej., glucólisis, TCA, transporte de electrones, respuesta a estrés) están enriquecidos?
+3. ¿Qué patrones son compartidos y cuáles son específicos entre *E. coli* y *S. pombe*?
+4. ¿Cómo varían las métricas técnicas (tasa de mapeo, fracción asignada a genes, profundidad efectiva) entre condiciones y organismos?
 
-¿Qué procesos/ontologías (p. ej., glucólisis, TCA, transporte de electrones, estrés) están enriquecidos?
+---
 
-¿Qué patrones son compartidos y cuáles son específicos entre E. coli y S. pombe?
+## Hipótesis
 
-¿Cómo varían métricas técnicas (tasa de mapeo, fracción asignada a genes) entre condiciones y organismos?
+- En **fermentación**, aumentarán genes relacionados con la glucólisis y disminuirán genes del ciclo de Krebs (TCA) y de la cadena de transporte de electrones (ETC); en **respiración**, se observará el patrón inverso.
+- Existirá un **núcleo conservado** de respuestas metabólicas entre *E. coli* y *S. pombe*, pero con **diferencias regulatorias** propias de procariotas vs eucariotas (por ejemplo, organización operónica vs regulación por cromatina).
 
-Hipótesis.
+---
 
-En fermentación aumentarán genes glucolíticos y disminuirán genes del TCA/ETC; en respiración ocurrirá el patrón inverso.
+## Metodología
 
-Existirá un núcleo conservado de respuestas metabólicas, con diferencias regulatorias propias de procariotas vs eucariotas.
+### Pasos generales
 
+1. **Localización de la fuente de datos**  
+   - Identificar BioProject/BioSample/GEO asociados al estudio (p. ej. PRJNA574477).
+2. **Descarga de archivos de datos**  
+   - Descarga de FASTQ desde SRA/ENA utilizando `sra-tools` o FTP/HTTPS.
+3. **Inspección de datos**  
+   - Verificar integridad de archivos.
+   - Inspección básica (FastQC) de calidad de lecturas.
+4. **Limpieza de datos**  
+   - Recorte de adaptadores y baja calidad (Trim Galore!/cutadapt).
+5. **Descripción de los datos**  
+   - Estadísticos de mapeo, conteos por gen, distribución de conteos, PCA preliminar.
+6. **Análisis de datos depurados**  
+   - Generación de matrices de conteos.
+   - Ejecución de DESeq2 (uno por organismo).
+   - Análisis de enriquecimiento funcional (opcional).
+7. **Obtención de resultados**  
+   - Listas de DEGs, figuras (volcano, MA-plot, heatmaps, PCA).
+   - Resumen comparativo *E. coli* vs *S. pombe*.
 
-## Metodología ## 
-
-Paso 1: Localización de fuente de datos  
-Paso 2: Descarga de archivos de datos  
-Paso 3: Inspección de datos  
-Paso 4: Limpieza de datos
-Paso 5: Descripción de los datos  
-Paso 5: Análsis de datos depurados  
-Paso 6: Obtención de resultados  
-
-
+---
 
 ## Resultados esperados
 
+Estructura esperada (conceptual) de salidas principales:
+
+```text
 data/metadata/samples.tsv
 
 data/reference/*/{genome.fa, genes.gtf, index/}
 
-results/align/*/*.sorted.{bam,bai}
+results/align/<organism>/<sample>.sorted.{bam,bai}
 
 results/counts/{Ecoli_counts.tsv, Spombe_counts.tsv}
 
-results/DE/*/{DEGs.tsv, normalized_counts.tsv}
+results/DE/<organism>/{DEGs.tsv, normalized_counts.tsv}
 
-results/plots/*/{MA.png, volcano.png, PCA.png}
+results/plots/<organism>/{MA.png, volcano.png, PCA.png}
 
 results/annotation/*.tsv
 
@@ -100,66 +142,90 @@ results/comparative/summary.tsv
 logs/{download,validate,align,count,de}/*.log
 
 docs/{presentacion_final.pdf, pipeline.svg}
+```
 
+--- 
+## Análisis y diseño (pseudocódigo)
 
+### Funciones principales
 
-## Análisis y Diseño
+buscar_geo_por_proyecto(project_acc: str) -> dict
+    # Busca el GEO asociado a un BioProject (p. ej., GSE)
+    # Obtiene detalles para el primer GEO (o itera si hay >1)
 
-Funciones (pseudocódigo)
-1. buscar_geo_por_proyecto(project_acc: str) -> dict
-    #Busca GEO asociado al BioProject (p. ej. GSE) 
-    #Obtener detalles para el primer GEO (o iterar si hay >1)
+obtener_sra_runinfo_por_bioproject(bioproject_acc: str) -> DataFrame
+    # Usa esearch (db="sra") + efetch (rettype=runinfo)
+    # Devuelve un DataFrame con columnas como:
+    # Run, Experiment, Sample, BioSample, LibraryLayout,
+    # scientific_name, ftp_path, etc.
 
-2. obtener_sra_runinfo_por_bioproject(bioproject_acc: str) -> DataFrame 
-    #Usa esearch (sra) + efetch rettype=runinfo para obtener runinfo CSV
-    # Campos útiles: Run, Experiment, Sample, BioSample, LibraryLayout, scientific_name, ftp_path
+seleccionar_fastq_urls(df_runs: DataFrame) -> list[str]
+    # Extrae URLs FTP/HTTPS (o SRR IDs) para cada Run
+    # Prioriza enlaces directos a *.fastq.gz o usa SRR para prefetch
 
-3. seleccionar_fastq_urls(df_runs: DataFrame) -> list[str]
-    #Extrae FTP https URLs (o SRA identifiers) para cada Run
-    #Priorizar: ftp://.../fastq.gz (si existe) o usar run accession para prefetch
+buscar_ensamblajes_por_organismo(organism_term: str, filters: dict) -> DataFrame
+    # Hace esearch en db="assembly" para el organismo dado
+    # Aplica filtros (p. ej. refseq_only=True)
 
-4. buscar_ensamblajes_por_organismo(organism_term: str, filters: optional) -> DataFrame
-    #Hacer esearch por organimso en db="assembly"
+elegir_ensamblaje_referencia(df_assembly: DataFrame, preferencias: dict) -> row
+    # Elige un ensamblado de referencia a partir de criterios:
+    # - GCF preferido (GCF_000002945.2, GCF_000005845.2)
+    # - Estado: "reference genome" o "representative genome"
 
-5. elegir_ensamblaje_referencia(df_assembly: DataFrame, preferencias: dict) -> row
+listar_archivos_ftp(ftp_url: str) -> list[str]
+    # Parsea la URL con urlparse
+    # Convierte ftp://ftp.ncbi.nlm.nih.gov/... a https://...
+    # Lista archivos disponibles en el directorio
 
-6. listar_archivos_ftp(ftp_url: str) -> list[str]
-    # Parsear url con urlparse
-    # Convertir ftp://ftp.ncbi.nlm.nih.gov/... a https
+seleccionar_y_descargar_archivos_genoma(row, outdir) -> local_paths
+    # Usa FtpPath_RefSeq o FtpPath_GenBank del ensamblado seleccionado
+    # Descarga genome.fa, genes.gff/gtf, etc., a outdir
 
-7. seleccionar_y_descargar_archivos_genoma(row, outdir) -> local_paths
-# row debe contener FtpPath_RefSeq o FtpPath_GenBank
+descargar_fastq_con_sra_toolkit(run_ids: list[str], outdir: str) -> list[str]
+    # Usa prefetch + fasterq-dump para obtener FASTQ
+    # Comprime a fastq.gz y retorna rutas locales
 
-8. descargar_fastq_con_sra_toolkit(run_ids: list[str], outdir) -> local_fastq_paths
+alineamiento_por_replicado(fastq_pairs, reference_fasta, out_bam_dir) -> list[str]
+    # Alinea cada par de FASTQ contra la referencia
+    # Genera BAM ordenados + indexados en out_bam_dir
 
-9. alineamiento_por_replicado(fastq_pairs, reference_fasta, out_bam_dir) -> bam_paths
+generar_matriz_de_conteos(bam_paths, annotation_gtf) -> "counts_matrix.tsv"
+    # Cuenta lecturas por gen (featureCounts/HTSeq/coverageBed)
+    # Combina resultados individuales en una matriz genes × muestras
 
-10. generar_matriz_de_conteos(bam_paths, annotation_gtf) -> counts_matrix.tsv
+analisis_DESeq2(counts_matrix, sample_metadata) -> "DE_results"
+    # Construye objeto DESeq2, ajusta modelo, obtiene tabla de resultados
+    # Aplica filtros por padj y |log2FC|
 
-11. análisis_DESeq2(counts_matrix, sample_metadata) -> DE_results
+anotacion_y_comparacion_DEGs(DE_results_ecoli, DE_results_spombe) -> "reports"
+    # Integra anotación funcional (GO/KEGG)
+    # Compara patrones entre organismos y genera resúmenes/tablas/figuras
+    
+    # Flujo principal del pipeline
+1. Obtener información GEO/SRA:
+   - info_geo <- buscar_geo_por_proyecto("PRJNA574477")
+   - df_runs  <- obtener_sra_runinfo_por_bioproject("PRJNA574477")
+   - fastq_urls <- seleccionar_fastq_urls(df_runs)
 
-12. anotación_y_comparación_DEGs(DE_results_ecoli, DE_results_spombe) -> reports
+2. Para cada organismo objetivo (S. pombe, E. coli):
+   a) df_assembly <- buscar_ensamblajes_por_organismo(organism_term, filters={refseq_only: True})
+   b) selected_assembly <- elegir_ensamblaje_referencia(df_assembly, preferencias={GCF_...})
+   c) seleccionar_y_descargar_archivos_genoma(selected_assembly, BASE_DATA_DIR/{organism}/reference/)
 
+3. Descargar FASTQ en BASE_DATA_DIR/fastq/ usando SRA toolkit o FTP/HTTPS.
 
-- **Flujo principal**:
+4. Indexar referencias y alinear cada réplica:
+   - alineamiento_por_replicado(fastq_pairs, reference_fasta, BASE_DATA_DIR/bam/)
 
-	1. Obtener GEO/SRA info:
-   - info_geo <- buscar_geo_por_proyecto("PRJNA574477" o ProjectAcc)
-   - df_runs <- obtener_sra_runinfo_por_bioproject("PRJNA574477")
+5. Contar lecturas por gen:
+   - generar_matriz_de_conteos(bam_paths, annotation_gtf) -> BASE_DATA_DIR/counts/
 
-2. Obtener lista de FASTQ (por run) -> seleccionar_fastq_urls(df_runs)
+6. Ejecutar DESeq2 por organismo:
+   - analisis_DESeq2(counts_matrix_ecoli, metadata_ecoli) -> BASE_DATA_DIR/results/Ecoli/
+   - analisis_DESeq2(counts_matrix_spombe, metadata_spombe) -> BASE_DATA_DIR/results/Spombe/
 
-3. Para cada organismo objetivo (S. pombe, E. coli):
-   a. df_assembly <- buscar_ensamblajes_por_organismo(organism_term, filters.refseq_only=True)
-   b. selected_assembly <- elegir_ensamblaje_referencia(df_assembly, preferencia por GCF_000002945.2 / GCF_000005845.2 si se especifica)
-   c. descargar archivos genoma y anotación -> guardar en BASE_DATA_DIR/{organism}/reference/
-
-4. Descargar FASTQ en BASE_DATA_DIR/fastq/ (usar SRA toolkit o FTP HTTPS)
-5. Indexar referencias y alinear cada réplica -> generar BAM + BAI en BASE_DATA_DIR/bam/
-6. Contar lecturas por gen -> BASE_DATA_DIR/counts/
-7. Ejecutar DESeq2 por organismo -> resultados en BASE_DATA_DIR/results/
-8. Anotar y comparar resultados -> informes y visualizaciones en BASE_DATA_DIR/analysis/
-9. Guardar metadata, versiones (AssemblyAccession, Fecha, Hash archivos) en BASE_DATA_DIR/metadata/
+7. Anotar y comparar resultados:
+   - anotacion_y_comparacion_DEGs(DE_results_ecoli, DE_results_spombe) -> BASE_DATA_DIR/analysis/
 
 
 
