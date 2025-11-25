@@ -1,5 +1,5 @@
 
-High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth
+# High-throughput transcriptome sequencing and comparative analysis of *Escherichia coli* and *Schizosaccharomyces pombe* in respiratory and fermentative growth
 
 **Fecha:** 29/09/2025  
 **Autores:** Miryam Zamora, Alondra Márquez  
