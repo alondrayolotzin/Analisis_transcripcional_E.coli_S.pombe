@@ -1,10 +1,21 @@
-'''
-main_download.py
-Autor: Alondra Marquez
+"""
+bioproject.py
+Autor: Alondra Márquez
 Fecha: 2025-10-28
-Descripción: 
 
-'''
+Funciones auxiliares para interactuar con NCBI mediante Biopython (Entrez) y
+recuperar información relacionada con proyectos de secuenciación:
+
+- Consulta de BioProject a partir de su accession.
+- Obtención de un resumen del BioProject (título, organismo, descripción).
+- Búsqueda de enlaces entre BioProject y GEO (series GSE).
+- Obtención de un resumen de GEO (GSE) incluyendo sus muestras (GSM).
+- Recuperación de información de SRR asociada a una muestra GSM en SRA.
+
+Este módulo está pensado para ser utilizado por el script principal
+`main_download.py`.
+
+"""
 
 from Bio import Entrez
 import pandas as pd
@@ -16,7 +27,19 @@ import logging
 #Busca el UID de un BioProject usando su accession. Si hay error , se registra y retorna None.
 def set_email(email):
     Entrez.email = email
+
 def consulta_bioproject(project_accession):
+    """
+    Busca el UID interno de NCBI para un BioProject a partir de su accession.
+    Parameters
+    ----------
+    project_accession : str
+        Accession del BioProject (por ejemplo, "PRJNA574477").
+    Returns
+    -------
+    str or None
+        UID del BioProject en NCBI si se encuentra; en caso contrario, None.
+    """
     
     try:
         logging.info(f"Iniciando consulta BioProject: {project_accession}")
@@ -39,6 +62,28 @@ def consulta_bioproject(project_accession):
 
 #Resumen del proyecto: con el IUD y con la funcion esummary de Biopython sobre la base de datos bioproject se puede obtener el resumen del proyecto 
 def bioproject_summary(project_uid):
+    """
+    Recupera un resumen del BioProject usando su UID.
+
+    Utiliza `Entrez.esummary` sobre la base de datos "bioproject" para
+    obtener información básica del proyecto.
+
+    Parameters
+    ----------
+    project_uid : str
+        UID interno del BioProject en NCBI.
+
+    Returns
+    -------
+    dict or None
+        Diccionario con las claves:
+        - "Acceso"
+        - "Título"
+        - "Organismo"
+        - "Descripción"
+
+        Si algo falla o no se encuentra información, devuelve None.
+    """
     try:
         logging.info(f"Obteniendo resumen del BioProject UID {project_uid}")
         handle = Entrez.esummary(db="bioproject", id=project_uid)
@@ -66,6 +111,25 @@ def bioproject_summary(project_uid):
 
 # Relacionar BioProject con GEO (GSE) con el uid del bioproject
 def links_bioproject(project_uid, project_accession):
+    """
+    Obtiene las series GEO (GSE) asociadas a un BioProject.
+
+    Utiliza `Entrez.elink` para encontrar enlaces desde la base de datos
+    "bioproject" hacia "gds" (GEO DataSets).
+
+    Parameters
+    ----------
+    project_uid : str
+        UID interno del BioProject en NCBI.
+    project_accession : str
+        Accession original del BioProject (solo para mensajes de log).
+
+    Returns
+    -------
+    list of str
+        Lista de IDs de GEO (UIDs en "gds") asociados al BioProject.
+        Si no se encuentran enlaces o hay error, se devuelve una lista vacía.
+    """
     try:
         logging.info(f"Obteniendo enlaces GEO para BioProject UID {project_uid}")
         handle = Entrez.elink(dbfrom="bioproject", db="gds", id=project_uid)
@@ -86,7 +150,33 @@ def links_bioproject(project_uid, project_accession):
 
 
 def geo_summary(geo_uid):
-    # Verificando la información de GEO
+    """
+    Recupera un resumen de una serie GEO (GSE) a partir de su UID.
+
+    Utiliza `Entrez.esummary` sobre la base de datos "gds" para obtener
+    información general de la serie y una lista de sus muestras (GSM).
+
+    Parameters
+    ----------
+    geo_uid : str
+        UID interno en la base de datos "gds" de NCBI correspondiente a una
+        serie GEO (GSE).
+
+    Returns
+    -------
+    dict or None
+        Diccionario con las claves:
+        - "Accession" : accession de la serie GSE
+        - "Título"
+        - "Resumen"
+        - "Organismo"
+        - "N° muestras"
+        - "PubMed IDs"
+        - "Samples": lista de diccionarios con claves "GSM" y "Título"
+
+        Si algo falla o no se encuentra información, devuelve None.
+    """
+
     try:
         logging.info(f"Obteniendo resumen de GEO UID {geo_uid}")
         handle = Entrez.esummary(db="gds", id=geo_uid)
@@ -121,9 +211,38 @@ def geo_summary(geo_uid):
         logging.error(f"Error obteniendo resumen de GEO UID {geo_uid}: {e}")
         return None
   
-# Devuelve los SRR asociados a una muestra GSM
+
 def srr_(gsm_id):
-    #Busca los SRR asociados a una muestra GSM en el SRA
+    """
+    Obtiene la información de SRR asociada a una muestra GEO (GSM).
+
+    Busca el GSM en la base de datos "sra" y luego recupera la tabla
+    `runinfo` (formato texto) con `Entrez.efetch`. La tabla se convierte
+    a un DataFrame de pandas y se devuelven solo las columnas relevantes
+    para el pipeline.
+
+    Parameters
+    ----------
+    gsm_id : str
+        Accession de la muestra GEO (por ejemplo, "GSM123456").
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame con las columnas:
+        - "Run"
+        - "Experiment"
+        - "Platform"
+        - "LibraryName"
+        - "LibraryLayout"
+        - "Sample"
+        - "ScientificName"
+        - "SampleName"
+
+        Si no se encuentran SRR o hay algún error, se devuelve un
+        DataFrame vacío.
+    """
+    
     try:
         logging.info(f"Buscando SRR para GSM {gsm_id}")
         #Busca los SRR asociados a una muestra GSM en el SRA
