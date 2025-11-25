@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 """
 cobertura.py
 Autor: Miryam Zamora
@@ -16,7 +14,6 @@ Este módulo es llamado por main.cobertura.py y forma parte del pipeline de RNA-
 
 =================
 """
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
 import pandas as pd
 import os
 import re
@@ -28,12 +25,10 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 def alinear_con_bwa(bwa_index, reads_dir, out_dir, threads=8, sort_mem="2G", tmpdir="/dev/shm"):
     """
-<<<<<<< HEAD
     Alinea lecturas pareadas (R1/R2) con BWA MEM y produce archivos BAM ordenados e indexados.
     - Acepta referencia .fa/.fna o comprimida (.fa.gz, .fna.gz)
     - Descomprime temporalmente si es necesario
     - Usa samtools con parámetros configurables
-=======
     
     Alinea lecturas pareadas (R1/R2) con BWA MEM y produce archivos BAM
     ordenados e indexados con samtools.
@@ -85,7 +80,6 @@ def alinear_con_bwa(bwa_index, reads_dir, out_dir, threads=8, sort_mem="2G", tmp
     RuntimeError
         Si no se pueden identificar pares válidos R1/R2.
     
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     """
 
     reads_dir = Path(reads_dir)
@@ -121,10 +115,7 @@ def alinear_con_bwa(bwa_index, reads_dir, out_dir, threads=8, sort_mem="2G", tmp
 
     # --- Agrupar R1/R2 ---
     def sample_key(p: Path):
-<<<<<<< HEAD
-=======
         
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
         name = p.name
         pair = None
         if re.search(r"(?:^|[_-])R?1(?:[_-]val[_-]?1)?(?=\.(?:fastq|fq)\.gz$)", name, re.IGNORECASE):
@@ -154,11 +145,8 @@ def alinear_con_bwa(bwa_index, reads_dir, out_dir, threads=8, sort_mem="2G", tmp
             print(f"[INFO] {bam_out.name} ya existe — se omite.")
             continue
 
-<<<<<<< HEAD
         print(f"\n🧬 Alineando muestra: {sample_tag}")
-=======
         print(f"\n Alineando muestra: {sample_tag}")
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
         print(f"   R1: {r1.name}")
         print(f"   R2: {r2.name}")
         print(f"   Hilos: {threads}, Memoria sort: {sort_mem}, TMP: {tmpdir}")
@@ -198,7 +186,6 @@ def generar_conteos_coverageBed(bam_dir, gff_file, out_dir=None):
     """
     Genera archivos .count.txt por muestra usando bedtools coverage (coverageBed).
 
-<<<<<<< HEAD
     Parámetros
     ----------
     bam_dir : str | Path
@@ -207,7 +194,6 @@ def generar_conteos_coverageBed(bam_dir, gff_file, out_dir=None):
         Archivo GFF/BED con las regiones anotadas.
     out_dir : str | Path, opcional
         Directorio de salida para los .count.txt (por defecto, usa el mismo bam_dir).
-=======
     Flujo general
     -------------
     1. Recorrer todos los archivos BAM en `bam_dir`.
@@ -237,7 +223,6 @@ def generar_conteos_coverageBed(bam_dir, gff_file, out_dir=None):
     ------
     FileNotFoundError
         Si no se encuentra el GFF/BED o si no hay BAMs en bam_dir.
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     """
     import subprocess
     from pathlib import Path
@@ -284,7 +269,6 @@ def generar_conteos_coverageBed(bam_dir, gff_file, out_dir=None):
     print("\n Conteo de lecturas completado con éxito.\n")
 
 
-<<<<<<< HEAD
 def _etiqueta_muestra(filename: str) -> str:
     """
     Deduce el nombre de la muestra a partir del nombre del archivo .count.txt.
@@ -292,7 +276,8 @@ def _etiqueta_muestra(filename: str) -> str:
       - GSM4099077.count.txt
       - SRR10192868.clean.sort.count.txt
       - sampleGSMxxxx.clean.sort.count.txt
-=======
+
+      """
 def _etiqueta_muestra(filename: str):
     """
  
@@ -316,17 +301,14 @@ def _etiqueta_muestra(filename: str):
     str
         Nombre de la muestra deducido a partir del nombre de archivo.
     
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     """
     base = re.split(r"[._]", filename)[0]
     return re.sub(r"^sample", "", base, flags=re.IGNORECASE)
 
 def _lee_y_normaliza_count(path: str):
     """
-<<<<<<< HEAD
     Lee un archivo .count.txt y devuelve un DataFrame con:
     ['gene_id', 'gene_name', 'sample', 'count']
-=======
     
     Lee un archivo .count.txt generado por bedtools coverage y devuelve
     un DataFrame en formato "largo" (long format) con columnas:
@@ -358,7 +340,6 @@ def _lee_y_normaliza_count(path: str):
     pandas.DataFrame
         DataFrame con columnas ['gene_id', 'gene_name', 'sample', 'count'].
     
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     """
     p = Path(path)
     sample = _etiqueta_muestra(p.name)
@@ -371,16 +352,6 @@ def _lee_y_normaliza_count(path: str):
     )
 
     # Extraer ID y Name
-<<<<<<< HEAD
-    df["gene_id"] = df["gene_information"].str.extract(r"ID=([^;]+)", expand=False)
-    df["gene_name"] = df["gene_information"].str.extract(r"Name=([^;]+)", expand=False)
-    df["gene_name"].fillna(df["gene_id"], inplace=True)
-    df["count"] = pd.to_numeric(df["count"], errors="coerce").fillna(0)
-
-    # Sumar por gene_id (por si hay duplicados)
-    df = df.groupby(["gene_id", "gene_name"], as_index=False)["count"].sum()
-    df["sample"] = sample
-=======
     df["gene_id"] = df["gene_information"].str.extract(r"locus_tag=([^;]+)", expand=False)
     df["gene_name"] = df["gene_information"].str.extract(r"Name=([^;]+)", expand=False)
     # Si no hay Name, usar gene_id como gene_name
@@ -395,13 +366,11 @@ def _lee_y_normaliza_count(path: str):
     )
 
     df["sample"] = sample       
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
 
     return df
 
 def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
     """
-<<<<<<< HEAD
     Combina archivos *.count.txt en una tabla de cobertura en formato ancho (genes x muestras).
     Usa procesamiento en paralelo para acelerar la lectura y combinación.
 
@@ -415,8 +384,7 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
         Número de procesos (por defecto: min(8, núm. de CPUs)).
     pattern : str | None
         Patrón opcional (por defecto: *.count.txt y *.clean.sort.count.txt)
-    """
-=======
+    
     Combina archivos de conteo (*.count.txt) en una tabla de cobertura
     genes x muestras, lista para ser usada en DESeq2 u otros análisis.
 
@@ -462,15 +430,11 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
     RuntimeError
         Si no se pudo leer ningún archivo de conteo válido.
     """    
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     path_in = Path(path_in)
     out_csv = Path(out_csv)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
 
-<<<<<<< HEAD
-=======
     # Selección de archivos de conteo según el patrón
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     if pattern is None:
         files = sorted(path_in.glob("*.count.txt")) + sorted(path_in.glob("*.clean.sort.count.txt"))
     else:
@@ -478,22 +442,16 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
 
     if not files:
         raise FileNotFoundError(f"No se encontraron archivos de conteo en {path_in}")
-<<<<<<< HEAD
 
-=======
     
     # Determinar número de procesos a usar
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     if workers is None:
         workers = min(8, max(1, os.cpu_count() or 2))
 
     print(f"[INFO] Combinando {len(files)} archivos de conteo usando {workers} procesos...")
 
     frames = []
-<<<<<<< HEAD
-=======
     # Leer archivos de conteo en paralelo
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     with ProcessPoolExecutor(max_workers=workers) as ex:
         futs = {ex.submit(_lee_y_normaliza_count, str(f)): f for f in files}
         for fut in as_completed(futs):
@@ -504,11 +462,9 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
 
     if not frames:
         raise RuntimeError("No se pudo leer ningún archivo de conteo válido.")
-<<<<<<< HEAD
 
     largo = pd.concat(frames, ignore_index=True)
 
-=======
     
     # Concatenar en un DataFrame "largo"
     largo = pd.concat(frames, ignore_index=True)
@@ -539,7 +495,6 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
             "Revisar la lógica de combinación de cobertura."
         )
 
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
     # Convertir a formato ancho (genes en filas, muestras en columnas)
     ancho = largo.pivot_table(
         index=["gene_id", "gene_name"],
@@ -552,11 +507,8 @@ def combinar_cobertura(path_in, out_csv, workers=None, pattern=None):
     ancho = ancho.reindex(sorted(ancho.columns), axis=1)
     ancho.reset_index().to_csv(out_csv, index=False)
 
-<<<<<<< HEAD
     print(f"[OK] Tabla de cobertura generada correctamente: {out_csv}")
-=======
     n_genes = ancho.index.get_level_values("gene_id").nunique()
     print(f"[OK] Tabla de cobertura generada correctamente: {out_csv}")
     print(f"[INFO] Genes únicos en tabla de cobertura: {n_genes}")
->>>>>>> 77a8dd4e0872270b1eb7f1e5fa4bfe190cdc9f44
 
